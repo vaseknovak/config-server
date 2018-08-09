@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.home}/client.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</Pattern>
+		</encoder>
+
+		
+	    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.home}/client-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+    </appender>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="validation" level="INFO">
+		<appender-ref ref="validationAppender" />
+	</logger>
+
+	<logger name="org.apache.activemq.transport.AbstractInactivityMonitor" level="WARN" />
+	<logger name="ma.glasnost.orika.*" level="WARN" />
+
+	<root level="DEBUG">
+		<appender-ref ref="console" />
+		<appender-ref ref="fileAppender" />
+	</root>
+</configuration>
